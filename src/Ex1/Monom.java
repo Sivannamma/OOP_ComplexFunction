@@ -277,14 +277,16 @@ public class Monom implements function {
 
 	@Override
 	public function initFromString(String s) {
-		// TODO Auto-generated method stub
-		return null;
+		function func = new Monom(s); // creating a new function from monom constructor
+		return func;
 	}
 
 	@Override
 	public function copy() {
-		// TODO Auto-generated method stub
-		return null;
+		String str = this.toString();
+		Monom other = new Monom(str);
+		return other;
+
 	}
 
 }
