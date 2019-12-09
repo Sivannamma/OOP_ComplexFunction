@@ -1,4 +1,4 @@
-package myMath;
+package Ex1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import myMath.Monom;
+import Ex1.Monom;
 
 /**
  * This class represents a Polynom with add, multiply functionality, it also
@@ -36,6 +36,20 @@ public class Polynom implements Polynom_able {
 	 * 
 	 * @param s: is a string represents a Polynom
 	 */
+	private boolean ifToRoundAbove(String str) {
+		// to reach the dot
+		int j = 0;
+		for (j = 0; j < str.length() && str.charAt(j) != '.'; j++)
+			;
+		// to count if theres '99' -> than we round
+		for (int i = j + 1; i < str.length() - 1; i++) {
+			if (str.charAt(i) == '9' && str.charAt(i + 1) == '9') {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public Polynom(String s) {
 		if (s == "") {
 			throw new RuntimeException("empty polynom exception");
@@ -72,7 +86,17 @@ public class Polynom implements Polynom_able {
 		while (iter.hasNext()) { // going over the map
 			ans += iter.next().f(x); // suming
 		}
-		return ans;
+		return (ifToRoundAbove(ans + "")) ? round(ans, 2) : ans;
+	}
+
+	private double round(double value, int places) {
+		if (places < 0)
+			throw new IllegalArgumentException();
+
+		long factor = (long) Math.pow(10, places);
+		value = value * factor;
+		long tmp = Math.round(value);
+		return (double) tmp / factor;
 	}
 
 	@Override
@@ -138,17 +162,20 @@ public class Polynom implements Polynom_able {
 	}
 
 	@Override
-	public boolean equals(Polynom_able p1) {
-
-		Iterator<Monom> iterOther = p1.iteretor(); // iterator of p1
-		Iterator<Monom> iterThis = this.iteretor();
-		while (iterOther.hasNext() && iterThis.hasNext()) {
-			// using a function in monom class
-			if (!iterThis.next().isEqual(iterOther.next())) // checking if the coefficent isnt equals to 0
-				return false;
+	public boolean equals(Object p1) {
+		if (p1 instanceof Polynom) {
+			Iterator<Monom> iterOther = ((Polynom) p1).iteretor(); // iterator of p1
+			Iterator<Monom> iterThis = this.iteretor();
+			if (((Polynom) p1).isZero() && this.isZero())
+				return true;
+			while (iterOther.hasNext() && iterThis.hasNext()) {
+				// using a function in monom class
+				if (!iterThis.next().isEqual(iterOther.next())) // checking if the coefficent isnt equals to 0
+					return false;
+			}
+			return iterOther.next() == null && iterThis.next() == null; // confirming we went over all the monoms
 		}
-		return iterOther.next() == null && iterThis.next() == null; // confirming we went over all the monoms
-
+		return false;
 	}
 
 	@Override
@@ -247,6 +274,12 @@ public class Polynom implements Polynom_able {
 			str += iterC.next().toString();
 		}
 		return str;
+	}
+
+	@Override
+	public function initFromString(String s) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

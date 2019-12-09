@@ -1,5 +1,5 @@
 
-package myMath;
+package Ex1;
 
 import java.util.Comparator;
 
@@ -154,7 +154,7 @@ public class Monom implements function {
 			zeroCount++;
 			i++;
 		}
-
+		str = inputSupport(str);
 		double num = Integer.parseInt(str);
 		while (num > 1)
 			num = num / 10;
@@ -165,6 +165,13 @@ public class Monom implements function {
 		}
 		return num;
 
+	}
+
+	private String inputSupport(String str) {
+		int toDivide = str.length() - 9;
+		if (str.length() > 9)
+			return str.substring(0, str.length() - toDivide);
+		return str;
 	}
 
 	private boolean isLegalInput(String s) {
@@ -199,6 +206,8 @@ public class Monom implements function {
 
 	public boolean isLegalNumber(String str, boolean isFirst) {
 		if (isFirst) { // needs to check for a double number
+			if (str.length() != 1 && str.charAt(0) == '.')
+				return false;
 			if (str.contentEquals(""))
 				return true;
 			try {
@@ -265,5 +274,17 @@ public class Monom implements function {
 
 	private double _coefficient;
 	private int _power;
+
+	@Override
+	public function initFromString(String s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public function copy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
