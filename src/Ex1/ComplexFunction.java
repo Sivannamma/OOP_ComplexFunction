@@ -19,7 +19,6 @@ public class ComplexFunction implements complex_function {
 
 	public ComplexFunction(function left, function right, String op) {
 
-<<<<<<< HEAD
 		if (left == null) { // left side cannot be null - throwing exception.
 			throw new RuntimeException("functions cannot be null");
 		}
@@ -39,22 +38,6 @@ public class ComplexFunction implements complex_function {
 		switch (op.toUpperCase()) { // because we get it like a string.
 		case "NONE": {
 			if (this.right != null) // can be none if and only if right side function is null.
-=======
-		if (left == null) {
-			throw new RuntimeException("functions cannot be null");
-		}
-		// because they arent null we can initialize them:
-		// we treat the functions as nodes, therefore we deep copy, otherwise we change
-		// pointers
-		this.left = left.copy();
-		this.right = right.copy();
-
-		// checking for the operation :
-		// Plus, Times, Divid, Max, Min, Comp , None, Error
-		switch (op.toUpperCase()) {
-		case "NONE": {
-			if (this.right != null)
->>>>>>> 01d1cd5c54b97323e172d07cb23da82f8aebd6b7
 				throw new RuntimeException("None cannot be exicuted with two functions");
 			this.op = Operation.None;
 			break;
@@ -106,11 +89,7 @@ public class ComplexFunction implements complex_function {
 		}
 		case Max: {
 			if (this.left.f(x) > this.right.f(x))
-<<<<<<< HEAD
 				return this.left.f(x); // left is the max
-=======
-				return this.left.f(x); // left is the min
->>>>>>> 01d1cd5c54b97323e172d07cb23da82f8aebd6b7
 			else
 				return this.right.f(x);
 		}
@@ -154,13 +133,45 @@ public class ComplexFunction implements complex_function {
 			function setFunc = new ComplexFunction(left);
 			return setFunc;
 		} else { // it means the operation is not None
-			String temp = s.substring(i + 1);
-			function left = initFromString(temp.substring(0, temp.indexOf(',')));
-			function right = initFromString(temp.substring(temp.indexOf(',') + 1, temp.lastIndexOf(')')));
-			function setFunc = new ComplexFunction(left, right, op);
-			return setFunc;
+			String temp = s.substring(i + 1, s.length() - 1);
+			int split = indexOfSplit(temp);
+			if (split == -1) { // in case theres no operation, it means two functions sided
+				function left = initFromString(temp.substring(0, temp.indexOf(',')));
+				function right = initFromString(temp.substring(temp.indexOf(',') + 1));
+				function setFunc = new ComplexFunction(left, right, op);
+				return setFunc;
+			} else { // split it by the function
+				function left = initFromString(temp.substring(0, split - 1));
+				function right = initFromString(temp.substring(split));
+				function setFunc = new ComplexFunction(left, right, op);
+				return setFunc;
+			}
 
 		}
+	}
+
+	private int indexOfSplit(String str) {
+		int count = 0;
+		int index = str.indexOf('(');
+		if (index == -1)
+			return -1;
+		count++;
+		index++;
+		while (index < str.length()) {
+			// we count how many ( and ), by the times its 0 we know the two functions
+			// can be splited
+			if (str.charAt(index) == '(')
+				count++;
+
+			if (str.charAt(index) == ')')
+				count--;
+			index++;
+			if (index == str.length())
+				return str.indexOf(',');
+			if (count == 0) // means we can return the index of split
+				return index + 1;
+		}
+		return -2;
 	}
 
 	@Override
@@ -171,37 +182,53 @@ public class ComplexFunction implements complex_function {
 
 	@Override
 	public void plus(function f1) {
-		// TODO Auto-generated method stub
-
+		function thisNew = new ComplexFunction(this.left, this.right, this.op.toString());
+		this.left = thisNew.copy();
+		this.op = Operation.Plus;
+		this.right = f1.copy();
 	}
 
 	@Override
 	public void mul(function f1) {
-		// TODO Auto-generated method stub
-
+		function thisNew = new ComplexFunction(this.left, this.right, this.op.toString());
+		this.left = thisNew.copy();
+		this.op = Operation.Times;
+		this.right = f1.copy();
 	}
 
 	@Override
 	public void div(function f1) {
-		// TODO Auto-generated method stub
+		function thisNew = new ComplexFunction(this.left, this.right, this.op.toString());
+		this.left = thisNew.copy();
+		this.op = Operation.Divid;
+		this.right = f1.copy();
 
 	}
 
 	@Override
 	public void max(function f1) {
-		// TODO Auto-generated method stub
+		function thisNew = new ComplexFunction(this.left, this.right, this.op.toString());
+		this.left = thisNew.copy();
+		this.op = Operation.Max;
+		this.right = f1.copy();
 
 	}
 
 	@Override
 	public void min(function f1) {
-		// TODO Auto-generated method stub
+		function thisNew = new ComplexFunction(this.left, this.right, this.op.toString());
+		this.left = thisNew.copy();
+		this.op = Operation.Min;
+		this.right = f1.copy();
 
 	}
 
 	@Override
 	public void comp(function f1) {
-		// TODO Auto-generated method stub
+		function thisNew = new ComplexFunction(this.left, this.right, this.op.toString());
+		this.left = thisNew.copy();
+		this.op = Operation.Comp;
+		this.right = f1.copy();
 
 	}
 

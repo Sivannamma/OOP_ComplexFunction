@@ -62,7 +62,7 @@ public class Monom implements function {
 	}
 
 	public boolean isZero() {
-		return this.get_coefficient() == 0;
+		return this.get_coefficient() == 0.0;
 	}
 
 	// ***************** add your code below **********************

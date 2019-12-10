@@ -25,18 +25,8 @@ class ComplexFunctionTest {
 	void testInitFromString() {
 		Polynom p1 = new Polynom("5");
 		Polynom p2 = new Polynom("10X");
-		function f1 = new ComplexFunction(p1, p2, "plus");
-		f1 = f1.initFromString("plus(Times(2x,2x),2)");
-		System.out.println(f1.toString());
-		System.out.println(f1.f(1));
-		// times(mul(plus(2x,2x),5),10)
-<<<<<<< HEAD
-		// plus(Times(2x,2x),plus(2,2x))
-		// Times(2x,plus(2x,2x))2x))
-=======
-// plus(Times(2x,2x),plus(2,2x))
-//Times(2x,plus(2x,2x))2x))
->>>>>>> 01d1cd5c54b97323e172d07cb23da82f8aebd6b7
+		ComplexFunction f = new ComplexFunction(p1, p2, "Plus");
+
 	}
 
 //	@Test

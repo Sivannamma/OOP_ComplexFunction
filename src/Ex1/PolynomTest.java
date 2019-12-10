@@ -82,6 +82,15 @@ class PolynomTest {
 
 	@Test
 	void testMultiplyPolynom_able() {
+		String[] m1 = { "x+2", "x+6", "0.5x+1", "1", "-123.2x+0.42x^4" };
+		String[] m2 = { "x+2", "x+4", "5x", "-x", "0" };
+		String[] afterMul = { "x^2+4x+4.0", "10x+x^2+24", "5x+2.5x^2", "-x", "0x^1+0x^4" };
+		for (int i = 0; i < m2.length; i++) {
+			Polynom expected = new Polynom(afterMul[i]);
+			Polynom actual = new Polynom(m1[i]);
+			actual.multiply(new Polynom(m2[i]));
+			assertEquals(actual, expected);
+		}
 	}
 
 	@Test
@@ -97,6 +106,11 @@ class PolynomTest {
 
 	@Test
 	void testIsZero() {
+		String[] m = { "12x-12x+0x", "3x^3- x^3 +5-5-2.0x^3", "0", "0.00000x^4" };
+		for (int i = 0; i < m.length; i++) {
+			Polynom actual = new Polynom(m[i]);
+			assertEquals(actual.isZero(), true);
+		}
 	}
 
 	@Test
@@ -109,12 +123,26 @@ class PolynomTest {
 
 	@Test
 	void testDerivative() {
-
+		String[] m1 = { "3x+5x^2+4", "x^2+12.2x^3", "0.12x+3x^3", "1" };
+		String[] afterDer = { "3+10x", "2.0x+36.6x^2", "0.12+9x^2", "0" };
+		for (int i = 0; i < m1.length; i++) {
+			Polynom expected = new Polynom(afterDer[i]);
+			Polynom actual = new Polynom(m1[i]);
+			assertEquals(actual.derivative(), expected);
+		}
 	}
 
 	@Test
 	void testMultiplyMonom() {
-
+		String[] m1 = { "x+2", "x+6", "0.5x+1", "1", "-123.2x+0.42x^4" };
+		String[] m2 = { "1", "2", "5", "-4", "0" };
+		String[] afterMul = { "x+2", "2.0x+12.0", "5+2.5x^1", "-4", "0x^1+0x^4" };
+		for (int i = 0; i < m2.length; i++) {
+			Polynom expected = new Polynom(afterMul[i]);
+			Polynom actual = new Polynom(m1[i]);
+			actual.multiply(new Polynom(m2[i]));
+			assertEquals(actual, expected);
+		}
 	}
 
 	@Test
