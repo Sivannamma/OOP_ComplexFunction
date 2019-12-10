@@ -30,8 +30,13 @@ class ComplexFunctionTest {
 		System.out.println(f1.toString());
 		System.out.println(f1.f(1));
 		// times(mul(plus(2x,2x),5),10)
+<<<<<<< HEAD
 		// plus(Times(2x,2x),plus(2,2x))
 		// Times(2x,plus(2x,2x))2x))
+=======
+// plus(Times(2x,2x),plus(2,2x))
+//Times(2x,plus(2x,2x))2x))
+>>>>>>> 01d1cd5c54b97323e172d07cb23da82f8aebd6b7
 	}
 
 //	@Test

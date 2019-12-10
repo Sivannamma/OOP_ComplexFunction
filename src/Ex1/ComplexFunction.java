@@ -19,6 +19,7 @@ public class ComplexFunction implements complex_function {
 
 	public ComplexFunction(function left, function right, String op) {
 
+<<<<<<< HEAD
 		if (left == null) { // left side cannot be null - throwing exception.
 			throw new RuntimeException("functions cannot be null");
 		}
@@ -38,6 +39,22 @@ public class ComplexFunction implements complex_function {
 		switch (op.toUpperCase()) { // because we get it like a string.
 		case "NONE": {
 			if (this.right != null) // can be none if and only if right side function is null.
+=======
+		if (left == null) {
+			throw new RuntimeException("functions cannot be null");
+		}
+		// because they arent null we can initialize them:
+		// we treat the functions as nodes, therefore we deep copy, otherwise we change
+		// pointers
+		this.left = left.copy();
+		this.right = right.copy();
+
+		// checking for the operation :
+		// Plus, Times, Divid, Max, Min, Comp , None, Error
+		switch (op.toUpperCase()) {
+		case "NONE": {
+			if (this.right != null)
+>>>>>>> 01d1cd5c54b97323e172d07cb23da82f8aebd6b7
 				throw new RuntimeException("None cannot be exicuted with two functions");
 			this.op = Operation.None;
 			break;
@@ -89,7 +106,11 @@ public class ComplexFunction implements complex_function {
 		}
 		case Max: {
 			if (this.left.f(x) > this.right.f(x))
+<<<<<<< HEAD
 				return this.left.f(x); // left is the max
+=======
+				return this.left.f(x); // left is the min
+>>>>>>> 01d1cd5c54b97323e172d07cb23da82f8aebd6b7
 			else
 				return this.right.f(x);
 		}
