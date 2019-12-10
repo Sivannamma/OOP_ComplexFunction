@@ -89,7 +89,7 @@ public class Polynom implements Polynom_able {
 		return (ifToRoundAbove(ans + "")) ? round(ans, 2) : ans;
 	}
 
-	private double round(double value, int places) {
+	public static double round(double value, int places) {
 		if (places < 0)
 			throw new IllegalArgumentException();
 
@@ -105,7 +105,6 @@ public class Polynom implements Polynom_able {
 		while (iter.hasNext()) { // going over the object
 			this.add(iter.next()); // sending each monom to the add function
 		}
-
 	}
 
 	@Override
@@ -129,9 +128,7 @@ public class Polynom implements Polynom_able {
 
 		} else {
 			this.map.put(m1.get_power(), m1.get_coefficient() * -1);
-
 		}
-
 	}
 
 	@Override
@@ -139,7 +136,6 @@ public class Polynom implements Polynom_able {
 		Iterator<Monom> iter = p1.iteretor(); // iterator of p1
 		while (iter.hasNext()) { // going over the object
 			this.substract(iter.next()); // sending each monom to be substructed
-
 		}
 	}
 
@@ -164,14 +160,16 @@ public class Polynom implements Polynom_able {
 	@Override
 	public boolean equals(Object p1) {
 		if (p1 instanceof Polynom) {
-			Iterator<Monom> iterOther = ((Polynom) p1).iteretor(); // iterator of p1
+			Polynom_able polynom = ((Polynom) p1).copy();
+			Iterator<Monom> iterOther = polynom.iteretor(); // iterator of p1
 			Iterator<Monom> iterThis = this.iteretor();
-			if (((Polynom) p1).isZero() && this.isZero())
+			if (polynom.isZero() && this.isZero())
 				return true;
 			while (iterOther.hasNext() && iterThis.hasNext()) {
 				// using a function in monom class
-				if (!iterThis.next().isEqual(iterOther.next())) // checking if the coefficent isnt equals to 0
+				if (!iterThis.next().equals(iterOther.next())) // checking if the coefficent isnt equals to 0
 					return false;
+
 			}
 			return iterOther.next() == null && iterThis.next() == null; // confirming we went over all the monoms
 		}
@@ -278,8 +276,8 @@ public class Polynom implements Polynom_able {
 
 	@Override
 	public function initFromString(String s) {
-		// TODO Auto-generated method stub
-		return null;
+		function func = new Polynom(s); // creating a new function from Polynom constructor
+		return func;
 	}
 
 }

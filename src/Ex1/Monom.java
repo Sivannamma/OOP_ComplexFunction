@@ -206,10 +206,10 @@ public class Monom implements function {
 
 	public boolean isLegalNumber(String str, boolean isFirst) {
 		if (isFirst) { // needs to check for a double number
-			if (str.length() != 1 && str.charAt(0) == '.')
-				return false;
 			if (str.contentEquals(""))
 				return true;
+			if (str.length() != 1 && str.charAt(0) == '.')
+				return false;
 			try {
 				Double.parseDouble(str);
 				return true;
@@ -262,10 +262,17 @@ public class Monom implements function {
 		this._power = p;
 	}
 
-	public boolean isEqual(Monom m1) {
-		if (this.isZero() && m1.isZero()) // if the coefficent is zero - they r equal
-			return true;
-		return this._coefficient == m1._coefficient && this._power == m1._power;
+	@Override
+	public boolean equals(Object m1) {
+		if (m1 instanceof Monom) { // checking if m1 is instance of monom - than cast
+			Monom monom = (Monom) m1;
+			if (this.isZero() && monom.isZero()) // if the coefficent is zero - they r equal
+				return true;
+			this._coefficient = Polynom.round(this._coefficient, 2);
+			monom._coefficient = Polynom.round(monom._coefficient, 2);
+			return this._coefficient == monom._coefficient && this._power == monom._power;
+		} else
+			return false;
 	}
 
 	private static Monom getNewZeroMonom() {
@@ -277,14 +284,16 @@ public class Monom implements function {
 
 	@Override
 	public function initFromString(String s) {
-		// TODO Auto-generated method stub
-		return null;
+		function func = new Monom(s); // creating a new function from monom constructor
+		return func;
 	}
 
 	@Override
 	public function copy() {
-		// TODO Auto-generated method stub
-		return null;
+		String str = this.toString();
+		Monom other = new Monom(str);
+		return other;
+
 	}
 
 }

@@ -63,9 +63,15 @@ class PolynomTest {
 	@Test
 	void testSubstract() {
 
-		String[] m1 = { "12x^4+5", "5x+1", "5.999999x^12+3x-.012x^1-5", "1", "-123.2x+0.42x^4" };
-		String[] m2 = { "12x^4+5", "x^2+0", "2", "x", "-123" };
-		String[] afterSub = { "0", "5x+1-1.0x^2", "5.999999x^12+3x-.012x^1-7", "x-1", "-0.2-0.42x^4" };
+		Polynom p1 = new Polynom("-123.2x+0.42x^4");
+		Polynom p2 = new Polynom("-123x");
+		Polynom p3 = new Polynom("-0.2x+0.42x^4");
+		p1.substract(p2);
+		assertEquals(p1, p3);
+
+		String[] m1 = { "12x^4+5", "5x+1", "5.999999x^12+3x-0.012x^1-5", "1", "-123.2x+0.42x^4" };
+		String[] m2 = { "12x^4+5", "x^2+0", "2", "x", "-123x" };
+		String[] afterSub = { "0", "5x+1-1.0x^2", "5.999999x^12+3x-0.012x^1-7", "1-x", "-0.2x+0.42x^4" };
 		for (int i = 0; i < m2.length; i++) {
 			Polynom expected = new Polynom(afterSub[i]);
 			Polynom actual = new Polynom(m1[i]);
@@ -80,16 +86,17 @@ class PolynomTest {
 
 	@Test
 	void testEqualsObject() {
-		Polynom p1 = new Polynom("5x+5");
-		Polynom p2 = new Polynom("5x+5");
-		Polynom p3 = new Polynom("10x+10");
+		String[] q1 = { "18x^3+0", "5x+1", "0.12x^4", "1", "12x^5", "-12", "56.12x^5" };
+		String[] q2 = { "18.0x^3+0x", "4x+x+0.5+0.5", "0.12x^4", "1", "12.0x^5", "-12.0", "56.0x^5+0.12x^5" };
+		for (int i = 0; i < q1.length; i++) {
+			Polynom expected = new Polynom(q1[i]);
+			Polynom actual = new Polynom(q2[i]);
+			assertEquals(actual, expected);
+		}
 	}
 
 	@Test
 	void testIsZero() {
-//		p4.multiply(p5);
-//		boolean temp = true; // suppose to be true;
-//		assertEquals(p4.isZero(), temp);
 	}
 
 	@Test
