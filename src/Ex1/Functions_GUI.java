@@ -1,9 +1,17 @@
 package Ex1;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Scanner;
+
+import javax.swing.JFrame;
 
 public class Functions_GUI implements functions {
 	// we chose to use array list because as a collection it owns alot of useful
@@ -22,8 +30,7 @@ public class Functions_GUI implements functions {
 
 	@Override
 	public boolean addAll(Collection<? extends function> c) {
-		// TODO Auto-generated method stub
-		return false;
+		return arr_func.addAll(c);
 	}
 
 	@Override
@@ -74,31 +81,43 @@ public class Functions_GUI implements functions {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+		return arr_func.toArray();
 	}
 
 	@Override
 	public <T> T[] toArray(T[] a) {
-		// TODO Auto-generated method stub
-		return null;
+		return arr_func.toArray(a);
 	}
 
 	@Override
 	public void initFromFile(String file) throws IOException {
-		// TODO Auto-generated method stub
-
+		FileReader file_reader = new FileReader(file);
+		BufferedReader read_from = new BufferedReader(file_reader);
+		String lines = read_from.readLine();
+		while (lines != null) { // as long as we have lines to read to the file
+			ComplexFunction func = new ComplexFunction(lines);
+			arr_func.add(func);
+			lines = read_from.readLine();
+		}
+		read_from.close();
 	}
 
 	@Override
 	public void saveToFile(String file) throws IOException {
-		// TODO Auto-generated method stub
-
+		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+		Iterator<function> itr = arr_func.iterator();
+		while (itr.hasNext()) { // as long as we have more functions to read
+			writer.write(itr.next().toString());
+			writer.newLine(); // new line
+		}
+		writer.close();
 	}
 
 	@Override
 	public void drawFunctions(int width, int height, Range rx, Range ry, int resolution) {
-		// TODO Auto-generated method stub
+		StdDraw.setCanvasSize(width, height); // setting the board
+		StdDraw.setXscale(rx.get_min(), rx.get_max());
+		StdDraw.setXscale(ry.get_min(), ry.get_max());
 
 	}
 

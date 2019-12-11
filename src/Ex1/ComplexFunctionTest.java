@@ -179,7 +179,6 @@ class ComplexFunctionTest {
 		Polynom right = new Polynom("4x^3-8.5");
 		ComplexFunction func1 = new ComplexFunction(left, right, "min");
 		assertEquals(func1.getOp(), Operation.Min);
-
 	}
 
 }

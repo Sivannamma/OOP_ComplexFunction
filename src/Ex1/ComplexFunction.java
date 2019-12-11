@@ -26,6 +26,24 @@ public class ComplexFunction implements complex_function {
 		this.op = Operation.None;
 	}
 
+	public ComplexFunction(String str) {
+
+		if (str.contentEquals("")) // if the str is empty throws exception
+			throw new RuntimeException("ilegal input");
+
+		function func = initFromString(str);
+		if (func instanceof Polynom) { // if its one polynom it means only one side
+			this.op = Operation.None; // no operation because one side of the function
+			this.left = func.copy();
+		} else if (func instanceof ComplexFunction) {
+			this.op = ((ComplexFunction) func).getOp();
+			this.left = ((ComplexFunction) func).left;
+			this.right = ((ComplexFunction) func).right;
+		} else
+			throw new RuntimeException();
+
+	}
+
 	public ComplexFunction(function left, function right, String op) {
 
 		if (left == null) { // left side cannot be null - throwing exception.
@@ -139,7 +157,7 @@ public class ComplexFunction implements complex_function {
 		// if the operation is None we need to initialize only one side
 		// of the function - because None cant be between two functions
 		if (op.toUpperCase().contentEquals("NONE")) {
-			function left = initFromString(s.substring(i + 1, s.lastIndexOf(',')));
+			function left = initFromString(s.substring((i + 1), s.indexOf(')')));
 			function setFunc = new ComplexFunction(left);
 			return setFunc;
 		} else { // it means the operation is not None
