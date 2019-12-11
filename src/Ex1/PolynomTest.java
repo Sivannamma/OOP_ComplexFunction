@@ -119,6 +119,13 @@ class PolynomTest {
 
 	@Test
 	void testCopy() {
+		String[] strings = { "6.99x+20x^3+5x+2+5X^3", "5x+x^2+1+12x^3-102x^87", "0.25x^2+6.12x^5+2", "x+1+x^2-5x^3",
+				"0X+0.42x^4" };
+		for (int i = 0; i < strings.length; i++) {
+			Polynom p1 = new Polynom(strings[i]);
+			Polynom p2 = (Polynom) p1.copy();
+			assertEquals(p2, p1);
+		}
 	}
 
 	@Test
@@ -145,7 +152,7 @@ class PolynomTest {
 		}
 	}
 
-	@Test
+	@Test // ******** to add
 	void testInitFromString() {
 
 	}

@@ -44,7 +44,15 @@ class MonomTest {
 
 	@Test
 	void testMonomString() {
-		// fail("Not yet implemented");
+		// in this function we will check that after we do toString
+		// we can still use the string we get as initializing another monom
+		String[] m1 = { "12.12x^2", "0.25x^2", "6x^3", "0", "14.0x", "0.0x^0" };
+		for (int i = 0; i < m1.length; i++) {
+			Monom expected = new Monom(m1[i]);
+			Monom actual = new Monom(expected.toString());
+			assertEquals(actual, expected);
+		}
+
 	}
 
 	@Test
@@ -61,35 +69,49 @@ class MonomTest {
 		}
 	}
 
-//	@Test
-//	void testMultipy() {
-//		Monom m1 = new Monom("10x^3");
-//		Monom m2 = new Monom("2x");
-//		m1.multipy(m2);
-//		Monom m3 = new Monom("20.0x^4");
-//		assertEquals(m1, m3);
-//
-//	}
+	@Test
+	void testMultipy() {
+		Monom m1 = new Monom("10x^3");
+		Monom m2 = new Monom("2x");
+		m1.multipy(m2);
+		Monom m3 = new Monom("20.0x^4");
+		assertEquals(m1, m3);
+
+	}
 
 	@Test
 	void testIsEqual() {
-//		String[] arr1 = { "12.0x", "123.10x^1", "5x^5" };
-//		String[] arr2 = { "12x", "123.10x", "5.5x^5" };
-//		int i = 0;
-//		while (i < arr1.length) {
-//			assertEquals(new Monom(arr1[i]), new Monom(arr2[i]));
-//			i++;
-//		}
+		String[] arr1 = { "12.0x", "123.10x^1", "5x^5", "0" };
+		String[] arr2 = { "12x^1", "123.10x", "5.0x^5", "0.0" };
+		for (int j = 0; j < arr2.length; j++) {
+			assertEquals(new Monom(arr1[j]), new Monom(arr2[j]));
+		}
 	}
 
 	@Test
 	void testInitFromString() {
-		// fail("Not yet implemented");
+		// this test is excatly like the test of the constructor of the monom
+		// who gets a string as an initializer
+		String[] arr1 = { "12.0x", "123.10x^1", "5x^5", "0", "12x", "36.003x", "8.9999x^8", "71.12x^90", "3.12",
+				"0.0001x", "x", "-x", "-1" };
+		for (int i = 0; i < arr1.length; i++) {
+
+			try {
+				Monom m = new Monom(arr1[i]);
+				function func = m.initFromString(m.toString());
+			} catch (Exception e) {
+				throw new RuntimeException("all monoms are legal, should not throw an exception");
+			}
+		}
 	}
 
 	@Test
 	void testCopy() {
-		// fail("Not yet implemented");
+		String[] strings = { "0X", "5x^2", "3", "5.99998x", "12.5x^4" };
+		for (int i = 0; i < strings.length; i++) {
+			Monom m1 = new Monom(strings[i]);
+			Monom m2 = (Monom) m1.copy();
+			assertEquals(m1, m2);
+		}
 	}
-
 }

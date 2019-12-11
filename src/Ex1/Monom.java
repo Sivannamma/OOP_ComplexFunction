@@ -284,8 +284,8 @@ public class Monom implements function {
 
 	@Override
 	public function initFromString(String s) {
-		function func = new Monom(s); // creating a new function from monom constructor
-		return func;
+		// creating a new function from monom constructor
+		return new Monom(s);
 	}
 
 	@Override

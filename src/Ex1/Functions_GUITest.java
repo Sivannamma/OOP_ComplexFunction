@@ -112,8 +112,8 @@ class Functions_GUITest {
 			cf3.mul(new Polynom(s3[i]));
 		}
 
-		ComplexFunction cf = new ComplexFunction(Operation.Plus, p1, p2);
-		ComplexFunction cf4 = new ComplexFunction("div", new Polynom("x +1"), cf3);
+		ComplexFunction cf = new ComplexFunction(p1, p2, Operation.Plus);
+		ComplexFunction cf4 = new ComplexFunction(new Polynom("x +1"), cf3, "DIVId");
 		cf4.plus(new Monom("2"));
 		ans.add(cf.copy());
 		ans.add(cf4.copy());

@@ -8,6 +8,15 @@ public class ComplexFunction implements complex_function {
 	private function right = null;
 	private Operation op = Operation.None;
 
+	public ComplexFunction(function left, function right, Operation op) {
+		this.op = op;
+		if (left == null) // left cannot be null
+			throw new RuntimeException("function cannot be null");
+		this.left = left.copy();
+		if (right != null)
+			this.right = right.copy();
+	}
+
 	public ComplexFunction(function left) {
 		if (left == null)
 			throw new RuntimeException("function cannot be null");
@@ -50,7 +59,7 @@ public class ComplexFunction implements complex_function {
 			this.op = Operation.Times;
 			break;
 		}
-		case "DIVIDE": {
+		case "DIVID": {
 			this.op = Operation.Divid;
 			break;
 		}
@@ -108,6 +117,7 @@ public class ComplexFunction implements complex_function {
 			throw new RuntimeException("Operation cannot be initialize to such input");
 		}
 		}
+
 	}
 
 	@Override
@@ -282,7 +292,10 @@ public class ComplexFunction implements complex_function {
 		ans += '(';
 		if (left != null) {
 			ans += this.left.toString();
-			ans += ",";
+			if (this.op == Operation.None)
+				ans += ')';
+			else
+				ans += ",";
 		}
 		if (right != null) {
 			ans += this.right.toString();
@@ -291,4 +304,19 @@ public class ComplexFunction implements complex_function {
 		return ans;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		double range = -25;
+		final double jumpingRange = 0.01;
+		if (other instanceof ComplexFunction) {
+			complex_function otherO = (ComplexFunction) (other);
+			while (range <= 25) {
+				if (Math.abs(this.f(range) - otherO.f(range)) > 0.01) { // once they represents dif value- not the same
+					return false;
+				}
+				range += jumpingRange; // checking in epsilon steps
+			}
+		}
+		return true;
+	}
 }
