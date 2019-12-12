@@ -162,6 +162,7 @@ public class Functions_GUI implements functions {
 				StdDraw.line(i, func.f(i), i + 1, func.f(i + 1));
 			}
 		}
+		StdDraw.mouseX();
 	}
 
 	@Override

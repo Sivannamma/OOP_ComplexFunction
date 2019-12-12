@@ -2,12 +2,7 @@ package Ex1;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import junit.framework.Assert;
 
 class PolynomTest {
 

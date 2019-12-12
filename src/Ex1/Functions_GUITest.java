@@ -1,13 +1,8 @@
 package Ex1;
 
-import java.util.Arrays;
-import java.util.Iterator;
-
-import javax.swing.JFrame;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import java.io.IOException;
+import java.util.Iterator;
 import Ex1.ComplexFunction;
 import Ex1.Functions_GUI;
 import Ex1.Monom;
@@ -44,69 +39,6 @@ import Ex1.functions;
  *
  */
 class Functions_GUITest {
-	public static void main(String[] a) {
-		// functions data = FunctionsFactory();
-		Functions_GUI gui = new Functions_GUI();
-		// String file2 = "function_file2.txt";
-		try {
-
-			// data.initFromFile(file);
-			String file2 = "func.txt";
-			String file = "GUI_params.txt";
-			gui.initFromFile(file2);
-
-			// data.initFromFile(file2);
-//			int w = 800, h = 600, res = 300;
-//			Range rx = new Range(-10, 30);
-//			Range ry = new Range(-5, 25);
-			gui.drawFunctions(file);
-			// Functions_GUI data2 = new Functions_GUI();
-			// data2.initFromFile(file);
-			// data.saveToFile(file2);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// String JSON_param_file = "GUI_params.txt";
-		// data.drawFunctions(JSON_param_file);
-	}
-
-	private functions _data = null;
-	// @BeforeAll
-	// static void setUpBeforeClass() throws Exception {
-	// }
-
-	@BeforeEach
-	void setUp() throws Exception {
-		_data = FunctionsFactory();
-	}
-
-	// @Test
-	void testFunctions_GUI() {
-		// fail("Not yet implemented");
-	}
-
-	// @Test
-	void testInitFromFile() {
-		// fail("Not yet implemented");
-	}
-
-	// @Test
-	void testSaveToFile() {
-
-	}
-
-	// @Test
-	void testDrawFunctions() {
-
-	}
-
-	@Test
-	void testDrawFunctionsIntIntRangeRangeInt() {
-		_data.drawFunctions("GUI_params.txt");
-		// fail("Not yet implemented");
-	}
-
 	public static functions FunctionsFactory() {
 		functions ans = new Functions_GUI();
 		String s1 = "3.1 +2.4x^2 -x^4";
@@ -144,5 +76,70 @@ class Functions_GUITest {
 		ans.add(max);
 		ans.add(min);
 		return ans;
+	}
+
+	public static void main(String[] a) throws IOException {
+		functions data = FunctionsFactory(); // checking if the data created is working with the outside function
+		data.saveToFile("func.txt");
+	}
+
+	@Test
+	void testFunctions_GUI() {
+		function f1 = new ComplexFunction("Plus(Times(2x,2x),2x)");
+		function f2 = new ComplexFunction("Divid(max(2x+54,2x),Plus(54x+2x^5,6))");
+		function f3 = new ComplexFunction("min(plus(2x,2x),0)");
+		Functions_GUI gui = new Functions_GUI();
+		gui.arr_func.add(f1);
+		gui.arr_func.add(f2);
+		gui.arr_func.add(f3);
+		gui.remove(f1);
+		gui.remove(f2);
+		System.out.println("after Removing " + gui.arr_func.toString());
+		System.out.println("does f2 contains?(should be false cuz we removed it ), ans : " + gui.arr_func.contains(f2));
+		gui.arr_func.clear();
+		System.out.println("after clearing " + gui.arr_func.toString());
+	}
+
+	@Test
+	void testInitFromFile() throws IOException {
+		Functions_GUI gui = new Functions_GUI();
+		gui.initFromFile("func.txt");
+		System.out.println(gui.arr_func.toString()); // it shows that we did inserts function into the list
+	}
+
+	@Test
+	void testSaveToFile() throws IOException {
+		function f1 = new ComplexFunction("Plus(Times(2x,2x),2x)");
+		function f2 = new ComplexFunction("Divid(max(2x+54,2x),Plus(54x+2x^5,6))");
+		function f3 = new ComplexFunction("min(plus(2x,2x),0)");
+		Functions_GUI gui = new Functions_GUI();
+		gui.arr_func.add(f1);
+		gui.arr_func.add(f2);
+		gui.arr_func.add(f3);
+		gui.saveToFile("func.txt");
+	}
+
+	@Test
+	void testDrawFunctions() throws IOException {
+		function f1 = new ComplexFunction("Plus(Times(2x,2x),2x)");
+		function f2 = new ComplexFunction("Divid(max(2x+54,2x),Plus(54x+2x^5,6))");
+		function f3 = new ComplexFunction("min(plus(2x,2x),0)");
+		Functions_GUI gui = new Functions_GUI();
+		gui.arr_func.add(f1);
+		gui.arr_func.add(f2);
+		gui.arr_func.add(f3);
+		Range x = new Range(-5, 25);
+		Range y = new Range(10, -10);
+		gui.drawFunctions(800, 600, x, y, 100);
+
+	}
+
+	@Test
+	void ReadingFromJasonFileTest() throws IOException {
+		String fileFunction = "func.txt";
+		String fileJson = "GUI_params.txt";
+		Functions_GUI gui = new Functions_GUI();
+		gui.initFromFile(fileFunction);
+		gui.drawFunctions(fileJson);
 	}
 }

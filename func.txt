@@ -1,4 +1,2 @@
-Plus(x^2,0)
-times(plus(2x,2x),5x)
-divid(3x^5-2x,3)
-plus(plus(plus(2x,2x),times(3x,5+4x^5)),7)
+plus(2x,2x)
+min(plus(2x+3,5),9)
