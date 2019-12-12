@@ -140,6 +140,6 @@ class Functions_GUITest {
 		String fileJson = "GUI_params.txt";
 		Functions_GUI gui = new Functions_GUI();
 		gui.initFromFile(fileFunction);
-		gui.drawFunctions(fileJson);
+		gui.drawFunctions(fileJson); // the other function
 	}
 }
