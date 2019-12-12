@@ -103,7 +103,7 @@ public class ComplexFunction implements complex_function {
 	public double f(double x) {
 		switch (this.op) {
 		case None: {
-			throw new RuntimeException("Operation cannot be null");
+			return this.left.f(x);
 		}
 		case Plus: {
 			return this.left.f(x) + this.right.f(x);

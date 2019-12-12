@@ -46,36 +46,17 @@ import Ex1.functions;
 class Functions_GUITest {
 	public static void main(String[] a) {
 		functions data = FunctionsFactory();
-		Functions_GUI gui = new Functions_GUI();
-	
-		StdDraw.setCanvasSize(500, 500); // setting the board
-		StdDraw.setXscale(30, 550);
-		StdDraw.setYscale(30, 550);
-		StdDraw.line(50, 50,50, 500); 
-		
-		StdDraw.setPenRadius(0.05);
-		StdDraw.setPenColor(StdDraw.BLUE);
-		StdDraw.point(0.5, 0.5);
-		StdDraw.point(0.1,0.21);
-		StdDraw.line(0.3, 0.3, 0.7, 0.7);
-		StdDraw.setPenColor(StdDraw.MAGENTA);
-		StdDraw.line(0.2, 0.2, 0.8, 0.2);
 
-
-
-		// int w=1000, h=600, res=200;
-		// Range rx = new Range(-10,10);
-		// Range ry = new Range(-5,15);
-		//		data.drawFunctions(w,h,rx,ry,res);
-		String file = "func.txt";
 		// String file2 = "function_file2.txt";
 		try {
 			// data.initFromFile(file);
-			gui.initFromFile("func.txt");
-			System.out.println(gui.arr_func.toString());
-			function g = new ComplexFunction("Plus(2x,5x)");
-			gui.arr_func.add(g);
-			gui.saveToFile(file);
+			String file = "func.txt";
+			// gui.initFromFile(file);
+			data.initFromFile(file);
+			int w = 800, h = 600, res = 300;
+			Range rx = new Range(-10, 30);
+			Range ry = new Range(-5, 25);
+			data.drawFunctions(w, h, rx, ry, res);
 			// Functions_GUI data2 = new Functions_GUI();
 			// data2.initFromFile(file);
 			// data.saveToFile(file2);
@@ -88,9 +69,9 @@ class Functions_GUITest {
 	}
 
 	private functions _data = null;
-	//	@BeforeAll
-	//	static void setUpBeforeClass() throws Exception {
-	//	}
+	// @BeforeAll
+	// static void setUpBeforeClass() throws Exception {
+	// }
 
 	@BeforeEach
 	void setUp() throws Exception {
