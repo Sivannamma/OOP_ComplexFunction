@@ -45,18 +45,21 @@ import Ex1.functions;
  */
 class Functions_GUITest {
 	public static void main(String[] a) {
-		functions data = FunctionsFactory();
-
+		// functions data = FunctionsFactory();
+		Functions_GUI gui = new Functions_GUI();
 		// String file2 = "function_file2.txt";
 		try {
+
 			// data.initFromFile(file);
-			String file = "func.txt";
-			// gui.initFromFile(file);
-			data.initFromFile(file);
-			int w = 800, h = 600, res = 300;
-			Range rx = new Range(-10, 30);
-			Range ry = new Range(-5, 25);
-			data.drawFunctions(w, h, rx, ry, res);
+			String file2 = "func.txt";
+			String file = "GUI_params.txt";
+			gui.initFromFile(file2);
+
+			// data.initFromFile(file2);
+//			int w = 800, h = 600, res = 300;
+//			Range rx = new Range(-10, 30);
+//			Range ry = new Range(-5, 25);
+			gui.drawFunctions(file);
 			// Functions_GUI data2 = new Functions_GUI();
 			// data2.initFromFile(file);
 			// data.saveToFile(file2);
@@ -95,8 +98,7 @@ class Functions_GUITest {
 
 	// @Test
 	void testDrawFunctions() {
-		// _data.drawFunctions();
-		// fail("Not yet implemented");
+
 	}
 
 	@Test

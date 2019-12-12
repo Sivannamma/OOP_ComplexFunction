@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 public class Functions_GUI implements functions {
 	// we chose to use array list because as a collection it owns alot of useful
 	// function that are helpful to check the basic stuff that we need in this
@@ -161,8 +166,58 @@ public class Functions_GUI implements functions {
 
 	@Override
 	public void drawFunctions(String json_file) {
-		// TODO Auto-generated method stub
+		JsonParser jsonParser = new JsonParser();
+		// setting variables to get the input from the json file
+		JsonElement Width;
+		JsonElement Height;
+		JsonElement Resolution;
+		JsonArray RangeX;
+		JsonArray RangeY;
+		// setting default parameters in case we dont receive it from the file
+		int w = 600;
+		int h = 800;
+		int[] r_x = { -5, 25 };
+		int[] r_y = { 10, -10 };
+		int reso = 100;
+		try {
+			FileReader reader = new FileReader(json_file);
+			JsonObject read = (JsonObject) jsonParser.parse(reader);
+			if (read.get("Width") != null) {
+				Width = read.get("Width");
+				w = Width.getAsInt();
+			}
+			if (read.get("Height") != null) {
+				Height = read.get("Height");
+				h = Height.getAsInt();
+			}
+			if (read.get("Resolution") != null) {
+				Resolution = read.get("Resolution");
+				reso = Resolution.getAsInt();
+			}
 
+			if (read.get("Range_X") != null) {
+				RangeX = (JsonArray) read.get("Range_X");
+				Iterator<JsonElement> iter = RangeX.iterator();
+				int i = 0;
+				while (iter.hasNext()) {
+					r_x[i] = iter.next().getAsInt();
+					i++;
+				}
+			}
+			if (read.get("Range_Y") != null) {
+				RangeY = (JsonArray) read.get("Range_Y");
+				Iterator<JsonElement> iter = RangeY.iterator();
+				int i = 0;
+				while (iter.hasNext()) {
+					r_y[i] = iter.next().getAsInt();
+					i++;
+				}
+				Range Rx = new Range(r_x[0], r_x[1]);
+				Range Ry = new Range(r_y[0], r_y[1]);
+				drawFunctions(w, h, Rx, Ry, reso);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
 }
